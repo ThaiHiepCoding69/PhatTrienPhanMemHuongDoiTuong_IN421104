@@ -14,12 +14,22 @@ public class Club
     // Tên rỗng/toàn khoảng trắng -> ArgumentException; dài hơn MaxNameLength -> ArgumentException.
     public static Club Create(string name, string description)
     {
-        throw new NotImplementedException();
+        if (string.IsNullOrWhiteSpace(name))
+            throw new ArgumentException("Club name cannot be empty or whitespace.", nameof(name));
+
+        if (name.Length > MaxNameLength)
+            throw new ArgumentException($"Club name cannot exceed {MaxNameLength} characters.", nameof(name));
+
+        return new Club
+        {
+            Id = Guid.NewGuid(),
+            Name = name,
+            Description = description
+        };
     }
 
-    // TODO (Nhiệm vụ 4): trả về true khi số thành viên hiện tại còn nhỏ hơn MaxMembers.
     public bool HasRoom(int currentMemberCount)
     {
-        throw new NotImplementedException();
+        return currentMemberCount < MaxMembers;
     }
 }
