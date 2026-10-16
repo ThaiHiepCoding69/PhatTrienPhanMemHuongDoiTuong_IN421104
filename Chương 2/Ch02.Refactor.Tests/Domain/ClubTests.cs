@@ -22,13 +22,12 @@ public class ClubTests
         Assert.Equal(description, club.Description);
     }
 
-    [Theory]
-    [InlineData("")]
-    [InlineData("   ")]
-    public void Create_WithEmptyOrWhitespaceName_ThrowsArgumentException(string invalidName)
+    [Fact]
+    public void Create_WithEmptyOrWhitespaceName_ThrowsArgumentException()
     {
         // Arrange & Act & Assert
-        Assert.Throws<ArgumentException>(() => Club.Create(invalidName, "Description"));
+        Assert.Throws<ArgumentException>(() => Club.Create("", "Description"));
+        Assert.Throws<ArgumentException>(() => Club.Create("   ", "Description"));
     }
 
     [Fact]
@@ -41,19 +40,15 @@ public class ClubTests
         Assert.Throws<ArgumentException>(() => Club.Create(longName, "Description"));
     }
 
-    [Theory]
-    [InlineData(0, true)]
-    [InlineData(49, true)]
-    [InlineData(50, false)]
-    public void HasRoom_AtBoundaryMemberCounts_ReturnsExpectedResult(int currentMemberCount, bool expectedResult)
+    [Fact]
+    public void HasRoom_AtBoundaryMemberCounts_ReturnsExpectedResult()
     {
         // Arrange
         var club = Club.Create("Tech Club", "Description");
 
-        // Act
-        var result = club.HasRoom(currentMemberCount);
-
-        // Assert
-        Assert.Equal(expectedResult, result);
+        // Act & Assert
+        Assert.True(club.HasRoom(0));
+        Assert.True(club.HasRoom(49));
+        Assert.False(club.HasRoom(50));
     }
 }
