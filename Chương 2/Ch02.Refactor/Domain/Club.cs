@@ -1,6 +1,6 @@
 namespace EduHub.Ch02.Domain;
 
-/// <summary>Câu lạc bộ. Quy tắc nghiệp vụ nên nằm ở đây, không nằm trong ClubManager.</summary>
+/// <summary>Thực thể Câu lạc bộ (Domain Entity), chứa dữ liệu và quy tắc nghiệp vụ cốt lõi.</summary>
 public class Club
 {
     public const int MaxMembers = 50;
@@ -10,8 +10,7 @@ public class Club
     public required string Name { get; set; }
     public required string Description { get; set; }
 
-    // TODO (Nhiệm vụ 4): chuyển luật kiểm tra tên từ ClubManager.CreateClub vào đây.
-    // Tên rỗng/toàn khoảng trắng -> ArgumentException; dài hơn MaxNameLength -> ArgumentException.
+    /// <summary>Khởi tạo CLB mới với kiểm tra tính hợp lệ của tên.</summary>
     public static Club Create(string name, string description)
     {
         if (string.IsNullOrWhiteSpace(name))
